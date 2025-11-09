@@ -4,11 +4,35 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>CsabaDu Dynamic Test Data Lite xUnit.v3</Title>
+    <Version>2.1.1-beta</Version>
+    <Company>CsabaDu</Company>
+    <Description>An extension of CsabaDu.DynamicTestData.Lite framework to facilitate dynamic data-driven testing in xUnit.v3.</Description>
+    <Copyright>(c) 2025. Csaba Dudas (CsabaDu)</Copyright>
+    <PackageReleaseNotes>Initial beta release</PackageReleaseNotes>
+    <PackageTags>dynamic; unit; test; data; driven; typesafe; threadsafe; extensible; xunit.v3; modular; TheoryData;</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="CsabaDu.DynamicTestData.Lite" Version="2.1.1-beta" />
     <PackageReference Include="xunit.v3.extensibility.core" Version="3.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

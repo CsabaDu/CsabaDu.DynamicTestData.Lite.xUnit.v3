@@ -21,7 +21,10 @@ where TTestData : notnull, ITestData
         string? testMethodName)
     : this(dataStrategy)
     {
-        this.testMethodName = testMethodName;
+        if (testMethodName is not null)
+        {
+            this.testMethodName = testMethodName;
+        }
     }
 
     public TheoryTestData(
