@@ -10,19 +10,7 @@ public sealed class TheoryTestDataRow<TTestData>(
 ITheoryTestDataRow
 where TTestData : notnull, ITestData
 {
-    public TheoryTestDataRow(
-        TheoryTestDataRow<TTestData> other,
-        IDataStrategy dataStrategy,
-        string? testMethodName)
-    : this(
-          (TTestData)other.GetTestData(),
-          Guard.ArgumentNotNull(
-              dataStrategy,
-              nameof(dataStrategy))
-          .ArgsCode)
-    {
-    }
-
+    #region Constructors
     public TheoryTestDataRow(
         TheoryTestDataRow<TTestData> other,
         ArgsCode argsCode,
@@ -34,6 +22,20 @@ where TTestData : notnull, ITestData
         SetTheoryDataRow(
             other,
             testMethodName);
+    }
+
+    public TheoryTestDataRow(
+        TheoryTestDataRow<TTestData> other,
+        IDataStrategy dataStrategy,
+        string? testMethodName)
+    : this(
+          other,
+          Guard.ArgumentNotNull(
+              dataStrategy,
+              nameof(dataStrategy))
+          .ArgsCode,
+          testMethodName)
+    {
     }
 
     public TheoryTestDataRow(
@@ -60,12 +62,18 @@ where TTestData : notnull, ITestData
           testMethodName)
     {
     }
+    #endregion
 
+    #region Fields
     private TTestData _testData = testData;
+    #endregion
 
+    #region Properties
     public ArgsCode ArgsCode { get; private set; }
         = argsCode.Defined(nameof(argsCode));
+    #endregion
 
+    #region Methods
     public bool Equals(INamedTestCase? other)
     => _testData.Equals(other);
 
@@ -81,6 +89,7 @@ where TTestData : notnull, ITestData
     public string GetTestCaseName()
     => _testData.GetTestCaseName();
 
+    #region Non-Public Methods
     protected override object?[] GetData()
     => [_testData];
 
@@ -113,5 +122,6 @@ where TTestData : notnull, ITestData
             testMethodName,
             namedTestCase.GetTestCaseName())
         : testMethodName;
-
+    #endregion
+    #endregion
 }

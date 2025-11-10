@@ -8,19 +8,16 @@ public class TheoryTestData<TTestData>
  ITheoryTestData
 where TTestData : notnull, ITestData
 {
-    private TheoryTestData(IDataStrategy dataStrategy)
+    #region Constructors
+    private TheoryTestData(
+        IDataStrategy dataStrategy,
+        string? testMethodName)
     {
         argsCode = Guard.ArgumentNotNull(
             dataStrategy,
             nameof(dataStrategy))
             .ArgsCode;
-    }
 
-    private TheoryTestData(
-        IDataStrategy dataStrategy,
-        string? testMethodName)
-    : this(dataStrategy)
-    {
         if (testMethodName is not null)
         {
             this.testMethodName = testMethodName;
@@ -40,7 +37,7 @@ where TTestData : notnull, ITestData
         TheoryTestData<TTestData> other,
         IDataStrategy dataStrategy,
         string? testMethodName)
-    : this(dataStrategy)
+    : this(dataStrategy, testMethodName)
     {
         AddRange(other.Select(
             row => new TheoryTestDataRow<TTestData>(
@@ -62,13 +59,18 @@ where TTestData : notnull, ITestData
                 dataStrategy,
                 testMethodName)));
     }
+    #endregion
 
+    #region Fields
     private readonly ArgsCode argsCode;
     private readonly string? testMethodName;
+    #endregion
 
+    #region Methods
     protected override ITheoryTestDataRow Convert(TTestData row)
     => new TheoryTestDataRow<TTestData>(
         row,
         argsCode,
         testMethodName);
+    #endregion
 }
