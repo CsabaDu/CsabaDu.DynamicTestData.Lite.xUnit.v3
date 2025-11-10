@@ -28,21 +28,17 @@ public abstract class DynamicTheoryTestDataHolder(ArgsCode argsCode, PropsCode p
         TTestData testData,
         string? testMethodName)
     where TTestData : notnull, ITestData
-    {
-        DataHolder = new TheoryTestData<TTestData>(
-            testData,
-            this,
-            testMethodName);
-    }
+    => DataHolder = new TheoryTestData<TTestData>(
+        testData,
+        this,
+        testMethodName);
 
     protected void InitDataHolder<TTestData>(
         IEnumerable<TTestData> testDatas,
         string? testMethodName)
     where TTestData : notnull, ITestData
-    {
-        DataHolder = new TheoryTestData<TTestData>(
-            testDatas,
-            this,
-            testMethodName);
-    }
+    => DataHolder = new TheoryTestData<TTestData>(
+        testDatas,
+        this,
+        testMethodName);
 }
