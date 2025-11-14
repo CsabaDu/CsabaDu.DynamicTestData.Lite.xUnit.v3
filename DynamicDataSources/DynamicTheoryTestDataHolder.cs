@@ -4,41 +4,23 @@
 namespace CsabaDu.DynamicTestData.Lite.xUnit.v3.DynamicDataSources;
 
 public abstract class DynamicTheoryTestDataHolder(ArgsCode argsCode, PropsCode propsCode)
-: DynamicDataSource<ITheoryTestData>(argsCode, propsCode)
+: DynamicDataHolderSource<ITheoryTestData>(argsCode, propsCode)
 {
     protected override void Add<TTestData>(TTestData testData)
     {
-        if (DataHolder is not TheoryTestData<TTestData> theoryTestData)
-        {
-            InitDataHolder(testData, null);
-            return;
-        }
+        var theoryTestData = DataHolder as TheoryTestData<TTestData>;
+        bool isTypedDataHolder = theoryTestData is not null;
 
-        var namedTestCases = theoryTestData as IEnumerable<INamedTestCase>;
-
-        if (namedTestCases!.Any(testData.Equals))
-        {
-            return;
-        }
-
-        theoryTestData.Add(testData);
+        Add(
+            isTypedDataHolder,
+            theoryTestData!,
+            testData,
+            theoryTestData!.Add);
     }
 
-    protected void InitDataHolder<TTestData>(
-        TTestData testData,
-        string? testMethodName)
-    where TTestData : notnull, ITestData
+    protected override void InitDataHolder<TTestData>(TTestData testData)
     => DataHolder = new TheoryTestData<TTestData>(
         testData,
         this,
-        testMethodName);
-
-    protected void InitDataHolder<TTestData>(
-        IEnumerable<TTestData> testDatas,
-        string? testMethodName)
-    where TTestData : notnull, ITestData
-    => DataHolder = new TheoryTestData<TTestData>(
-        testDatas,
-        this,
-        testMethodName);
+        null);
 }
