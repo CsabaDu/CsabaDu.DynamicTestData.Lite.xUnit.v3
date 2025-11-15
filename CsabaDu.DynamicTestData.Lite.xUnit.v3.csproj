@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>CsabaDu Dynamic Test Data Lite xUnit.v3</Title>
-    <Version>2.1.1-beta</Version>
+    <Version>2.1.2-beta</Version>
     <Company>CsabaDu</Company>
     <Description>An extension of CsabaDu.DynamicTestData.Lite framework to facilitate dynamic data-driven testing in xUnit.v3.</Description>
     <Copyright>(c) 2025. Csaba Dudas (CsabaDu)</Copyright>
@@ -20,7 +20,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CsabaDu.DynamicTestData.Lite" Version="2.1.8-beta" />
+    <PackageReference Include="CsabaDu.DynamicTestData.Lite" Version="2.1.9-beta" />
     <PackageReference Include="xunit.v3.extensibility.core" Version="3.2.0" />
   </ItemGroup>
 

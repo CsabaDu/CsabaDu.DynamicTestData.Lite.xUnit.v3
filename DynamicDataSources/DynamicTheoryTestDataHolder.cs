@@ -11,10 +11,9 @@ public abstract class DynamicTheoryTestDataHolder(ArgsCode argsCode, PropsCode p
         var theoryTestData = DataHolder as TheoryTestData<TTestData>;
         bool isTypedDataHolder = theoryTestData is not null;
 
-        Add(
-            isTypedDataHolder,
-            theoryTestData!,
+        Add(theoryTestData is not null,
             testData,
+            theoryTestData!,
             theoryTestData!.Add);
     }
 
