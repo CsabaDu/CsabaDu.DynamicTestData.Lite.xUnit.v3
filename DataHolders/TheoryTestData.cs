@@ -45,20 +45,6 @@ where TTestData : notnull, ITestData
                 dataStrategy,
                 testMethodName)));
     }
-
-    public TheoryTestData(
-        IEnumerable<TTestData> testDatas,
-        IDataStrategy dataStrategy,
-        string? testMethodName)
-    : this(dataStrategy, testMethodName)
-
-    {
-        AddRange(testDatas.Select(
-            row => new TheoryTestDataRow<TTestData>(
-                row,
-                dataStrategy,
-                testMethodName)));
-    }
     #endregion
 
     #region Fields
