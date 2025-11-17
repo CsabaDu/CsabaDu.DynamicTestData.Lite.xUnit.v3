@@ -3,7 +3,7 @@
 
 namespace CsabaDu.DynamicTestData.Lite.xUnit.v3.DynamicDataSources;
 
-public abstract class DynamicTheoryTestDataHolder(ArgsCode argsCode, PropsCode propsCode)
+public abstract class DynamicTheoryTestDataSource(ArgsCode argsCode, PropsCode propsCode)
 : DynamicDataHolderSource<ITheoryTestData>(argsCode, propsCode)
 {
     protected override void Add<TTestData>(TTestData testData)
@@ -13,7 +13,7 @@ public abstract class DynamicTheoryTestDataHolder(ArgsCode argsCode, PropsCode p
 
         Add(theoryTestData is not null,
             testData,
-            theoryTestData!,
+            false,
             theoryTestData!.Add);
     }
 

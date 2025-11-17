@@ -1,6 +1,7 @@
 ﻿// SPDX-License-Identifier: MIT
 // Copyright (c) 2025. Csaba Dudas (CsabaDu)
 
+
 namespace CsabaDu.DynamicTestData.Lite.xUnit.v3.TestDataTypes;
 
 public sealed class TheoryTestDataRow<TTestData>(
@@ -74,6 +75,9 @@ where TTestData : notnull, ITestData
     #endregion
 
     #region Methods
+    public bool ContainedBy(IEnumerable<INamedTestCase>? namedTestCases)
+    => namedTestCases?.Any(Equals) == true;
+
     public bool Equals(INamedTestCase? other)
     => _testData.Equals(other);
 

@@ -67,6 +67,23 @@ where TTestData : notnull, ITestData
     #endregion
 
     #region Methods
+
+    public override void Add(ITheoryTestDataRow row)
+    {
+        if (!row.ContainedBy(this))
+        {
+            base.Add(row);
+        }
+    }
+
+    public new void Add(TTestData testData)
+    {
+        if (!testData.ContainedBy(this))
+        {
+            base.Add(testData);
+        }
+    }
+
     protected override ITheoryTestDataRow Convert(TTestData row)
     => new TheoryTestDataRow<TTestData>(
         row,
