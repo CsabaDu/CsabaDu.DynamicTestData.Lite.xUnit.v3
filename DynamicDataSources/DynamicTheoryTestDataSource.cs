@@ -13,7 +13,6 @@ public abstract class DynamicTheoryTestDataSource(ArgsCode argsCode, PropsCode p
 
         Add(theoryTestData is not null,
             testData,
-            false,
             theoryTestData!.Add);
     }
 
