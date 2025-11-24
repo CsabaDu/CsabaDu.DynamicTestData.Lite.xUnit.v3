@@ -8,10 +8,10 @@ public abstract class DynamicTheoryTestDataSource(ArgsCode argsCode, PropsCode p
 {
     protected override void Add<TTestData>(TTestData testData)
     {
-        var theoryTestData = DataHolder as TheoryTestData<TTestData>;
-        bool isTypedDataHolder = theoryTestData is not null;
+        bool isDataHolderTyped =
+            IsDataHolderTyped(out TheoryTestData<TTestData>? theoryTestData);
 
-        Add(theoryTestData is not null,
+        Add(isDataHolderTyped,
             testData,
             theoryTestData!.Add);
     }
