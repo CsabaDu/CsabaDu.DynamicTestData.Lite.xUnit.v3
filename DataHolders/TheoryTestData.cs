@@ -56,9 +56,9 @@ where TTestData : notnull, ITestData
 
     public override void Add(ITheoryTestDataRow row)
     {
-        if (!row.ContainedBy(this))
+        if (row?.ContainedBy(this) != true)
         {
-            base.Add(row);
+            base.Add(row!);
         }
     }
 
@@ -67,6 +67,22 @@ where TTestData : notnull, ITestData
         if (!testData.ContainedBy(this))
         {
             base.Add(testData);
+        }
+    }
+
+    public new void AddRange(IEnumerable<TTestData> rows)
+    {
+        foreach (var row in Guard.ArgumentNotNull(rows))
+        {
+            Add(row);
+        }
+    }
+
+    public new void AddRange(params TTestData[] rows)
+    {
+        foreach (var row in Guard.ArgumentNotNull(rows))
+        {
+            Add(row);
         }
     }
 
