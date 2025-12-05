@@ -1,7 +1,6 @@
 ﻿// SPDX-License-Identifier: MIT
 // Copyright (c) 2025. Csaba Dudas (CsabaDu)
 
-
 namespace CsabaDu.DynamicTestData.Lite.xUnit.v3.TestDataTypes;
 
 public sealed class TheoryTestDataRow<TTestData>(
@@ -90,8 +89,8 @@ where TTestData : notnull, ITestData
     public ITestData GetTestData()
     => _testData;
 
-    public string GetTestCaseName()
-    => _testData.GetTestCaseName();
+    public string TestCaseName
+    => _testData.TestCaseName;
 
     #region Non-Public Methods
     protected override object?[] GetData()
@@ -124,7 +123,7 @@ where TTestData : notnull, ITestData
     => ArgsCode == ArgsCode.Properties ?
         GetDisplayName(
             testMethodName,
-            namedTestCase.GetTestCaseName())
+            namedTestCase.TestCaseName)
         : testMethodName;
     #endregion
     #endregion
