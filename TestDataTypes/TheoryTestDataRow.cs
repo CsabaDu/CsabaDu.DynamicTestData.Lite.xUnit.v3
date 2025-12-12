@@ -1,6 +1,8 @@
 ﻿// SPDX-License-Identifier: MIT
 // Copyright (c) 2025. Csaba Dudas (CsabaDu)
 
+using CsabaDu.DynamicTestData.Lite.xUnit.v3.TestDataTypes.Interfaces;
+
 namespace CsabaDu.DynamicTestData.Lite.xUnit.v3.TestDataTypes;
 
 public sealed class TheoryTestDataRow<TTestData>(
@@ -121,7 +123,7 @@ where TTestData : notnull, ITestData
         string? testMethodName,
         INamedTestCase namedTestCase)
     => ArgsCode == ArgsCode.Properties ?
-        GetDisplayName(
+        CreateDisplayName(
             testMethodName,
             namedTestCase.TestCaseName)
         : testMethodName;

@@ -1,6 +1,10 @@
 ﻿// SPDX-License-Identifier: MIT
 // Copyright (c) 2025. Csaba Dudas (CsabaDu)
 
+using CsabaDu.DynamicTestData.Lite.xUnit.v3.DataHolders.Interfaces;
+using CsabaDu.DynamicTestData.Lite.xUnit.v3.TestDataTypes;
+using CsabaDu.DynamicTestData.Lite.xUnit.v3.TestDataTypes.Interfaces;
+
 namespace CsabaDu.DynamicTestData.Lite.xUnit.v3.DataHolders;
 
 public class TheoryTestData<TTestData>
