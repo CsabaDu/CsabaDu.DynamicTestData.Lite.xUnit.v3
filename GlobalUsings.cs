@@ -2,8 +2,9 @@
 // Copyright (c) 2025. Csaba Dudas (CsabaDu)
 
 global using CsabaDu.DynamicTestData.Core.DataStrategyTypes;
-global using CsabaDu.DynamicTestData.Core.Extensions;
+global using CsabaDu.DynamicTestData.Core.TestDataTypes.Converters;
 global using CsabaDu.DynamicTestData.Core.TestDataTypes.Interfaces;
+global using CsabaDu.DynamicTestData.Core.Validators;
 global using CsabaDu.DynamicTestData.Lite.DataStrategyTypes.Interfaces;
 global using CsabaDu.DynamicTestData.Lite.DynamicDataSources;
 global using System.Reflection;
@@ -12,3 +13,4 @@ global using Xunit.Internal;
 global using Xunit.Sdk;
 global using Xunit.v3;
 global using static CsabaDu.DynamicTestData.Core.TestDataTypes.Factories.DisplayNameFactory;
+global using static CsabaDu.DynamicTestData.Lite.XUnit.TestDataTypes.Converters.TestDataConverter;
