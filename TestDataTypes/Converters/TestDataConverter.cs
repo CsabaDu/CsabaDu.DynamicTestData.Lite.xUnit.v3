@@ -12,8 +12,5 @@ public static class TestDataConverter
         ArgsCode argsCode,
         string? testMethodName = null)
     where TTestData : notnull, ITestData
-    => new(
-        testData,
-        argsCode,
-        testMethodName);
+    => new(testData, argsCode, testMethodName);
 }

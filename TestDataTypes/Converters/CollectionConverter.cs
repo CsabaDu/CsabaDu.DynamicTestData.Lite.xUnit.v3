@@ -12,11 +12,8 @@ public static class CollectionConverter
         ArgsCode argsCode,
         string? testMethodName = null)
     where TTestData : notnull, ITestData
-    {
-        return testDataCollection.Convert(
+    => testDataCollection.Convert(
             TestDataConverter.ToTheoryTestDataRow,
-            nameof(TestDataConverter.ToTheoryTestDataRow),
             argsCode,
             testMethodName);
-    }
 }

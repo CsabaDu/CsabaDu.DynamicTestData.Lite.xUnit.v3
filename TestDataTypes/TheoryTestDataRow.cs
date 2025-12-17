@@ -123,10 +123,12 @@ where TTestData : notnull, ITestData
         string? testMethodName,
         INamedTestCase namedTestCase)
     => ArgsCode == ArgsCode.Properties ?
-        CreateDisplayName(
-            testMethodName,
-            namedTestCase.TestCaseName)
+        namedTestCase.GetDisplayName(
+            testMethodName)
         : testMethodName;
+
+    public string? GetDisplayName(string? testMethodName)
+    => _testData.GetDisplayName(testMethodName);
     #endregion
     #endregion
 }
