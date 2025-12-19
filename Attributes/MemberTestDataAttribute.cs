@@ -3,6 +3,7 @@
 
 using CsabaDu.DynamicTestData.Lite.xUnit.v3.TestDataTypes;
 using CsabaDu.DynamicTestData.Lite.xUnit.v3.TestDataTypes.Interfaces;
+using CsabaDu.DynamicTestData.Lite.XUnit.v3.TestDataTypes.Converters;
 
 namespace CsabaDu.DynamicTestData.xUnit.v3.Attributes;
 
@@ -86,9 +87,9 @@ public abstract class MemberTestDataAttributeBase
             return base.ConvertDataRow(dataRow);
         }
 
-        return new TheoryTestDataRow<ITestData>(
-            testData,
-            ArgsCode.Instance);
+        return testData.ToTheoryTestDataRow(
+            ArgsCode.Instance,
+            null);
     }
     #endregion
 }

@@ -3,7 +3,7 @@
 
 using CsabaDu.DynamicTestData.Lite.xUnit.v3.TestDataTypes;
 
-namespace CsabaDu.DynamicTestData.Lite.XUnit.TestDataTypes.Converters;
+namespace CsabaDu.DynamicTestData.Lite.XUnit.v3.TestDataTypes.Converters;
 
 public static class CollectionConverter
 {

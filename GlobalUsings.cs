@@ -12,5 +12,3 @@ global using Xunit;
 global using Xunit.Internal;
 global using Xunit.Sdk;
 global using Xunit.v3;
-global using static CsabaDu.DynamicTestData.Core.TestDataTypes.Factories.DisplayNameFactory;
-global using static CsabaDu.DynamicTestData.Lite.XUnit.TestDataTypes.Converters.TestDataConverter;

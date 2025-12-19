@@ -5,77 +5,35 @@ using CsabaDu.DynamicTestData.Lite.xUnit.v3.TestDataTypes.Interfaces;
 
 namespace CsabaDu.DynamicTestData.Lite.xUnit.v3.TestDataTypes;
 
-public sealed class TheoryTestDataRow<TTestData>(
-    TTestData testData,
+public class TheoryTestDataRow(
+    ITestData testData,
     ArgsCode argsCode)
 : TheoryDataRowBase,
 ITheoryTestDataRow
-where TTestData : notnull, ITestData
 {
-    #region Constructors
-    public TheoryTestDataRow(
-        TheoryTestDataRow<TTestData> other,
-        ArgsCode argsCode,
-        string? testMethodName)
-    : this(
-          (TTestData)other.GetTestData(),
-          argsCode)
-    {
-        SetTheoryDataRow(
-            other,
-            testMethodName);
-    }
-
-    public TheoryTestDataRow(
-        TheoryTestDataRow<TTestData> other,
-        IDataStrategy dataStrategy,
-        string? testMethodName)
-    : this(
-          other,
-          Guard.ArgumentNotNull(
-              dataStrategy,
-              nameof(dataStrategy))
-          .ArgsCode,
-          testMethodName)
-    {
-    }
-
-    public TheoryTestDataRow(
-        TTestData testData,
-        ArgsCode argsCode,
-        string? testMethodName)
-    : this(testData, argsCode)
-    {
-        TestDisplayName = GetTestDisplayName(
-            testMethodName,
-            testData);
-    }
-
-    public TheoryTestDataRow(
-        TTestData testData,
-        IDataStrategy dataStrategy,
-        string? testMethodName)
-    : this(
-          testData,
-          Guard.ArgumentNotNull(
-              dataStrategy,
-              nameof(dataStrategy))
-          .ArgsCode,
-          testMethodName)
-    {
-    }
-    #endregion
-
     #region Fields
-    private TTestData _testData = testData;
+    protected ITestData _testData = testData;
     #endregion
 
     #region Properties
-    public ArgsCode ArgsCode { get; private set; }
+    public ArgsCode ArgsCode { get; protected set; }
         = argsCode.Defined(nameof(argsCode));
     #endregion
 
     #region Methods
+    #region Static methods
+    public static ArgsCode GetArgsCode(IDataStrategy dataStrategy)
+    => Guard.ArgumentNotNull(
+        dataStrategy,
+        nameof(dataStrategy))
+        .ArgsCode;
+
+    public static TTestData GetTestData<TTestData>(
+        TheoryTestDataRow<TTestData> theoryTestDataRow)
+    where TTestData : notnull, ITestData
+    => (TTestData)theoryTestDataRow.GetTestData();
+    #endregion
+
     public bool ContainedBy(IEnumerable<INamedTestCase>? namedTestCases)
     => namedTestCases?.Any(Equals) == true;
 
@@ -84,6 +42,9 @@ where TTestData : notnull, ITestData
 
     public override bool Equals(object? obj)
     => _testData.Equals(obj);
+
+    public string? GetDisplayName(string? testMethodName)
+    => _testData.GetDisplayName(testMethodName);
 
     public override int GetHashCode()
     => _testData.GetHashCode();
@@ -95,12 +56,34 @@ where TTestData : notnull, ITestData
     => _testData.TestCaseName;
 
     #region Non-Public Methods
-    protected override object?[] GetData()
+    protected override sealed object?[] GetData()
     => [_testData];
+    #endregion
+    #endregion
+}
 
-    private void SetTheoryDataRow(
-        TheoryTestDataRow<TTestData> other,
+public sealed class TheoryTestDataRow<TTestData> : TheoryTestDataRow,
+ITheoryTestDataRow
+where TTestData : notnull, ITestData
+{
+    #region Constructors
+    // Main constructor
+    public TheoryTestDataRow(
+        TTestData testData,
+        ArgsCode argsCode,
         string? testMethodName)
+    : base(testData, argsCode)
+    {
+        TestDisplayName =
+            testData.GetDisplayName(testMethodName);
+    }
+
+    // Copy constructor with argsCode and testMethodName
+    public TheoryTestDataRow(
+        TheoryTestDataRow<TTestData> other,
+        ArgsCode argsCode,
+        string? testMethodName)
+    : base(GetTestData(other), argsCode)
     {
         ArgsCode = other.ArgsCode;
         _testData = other._testData;
@@ -111,24 +94,19 @@ where TTestData : notnull, ITestData
         SkipType = other.SkipType;
         SkipUnless = other.SkipUnless;
         SkipWhen = other.SkipWhen;
-        TestDisplayName = GetTestDisplayName(
-            testMethodName,
-            other)
+        TestDisplayName = other.GetDisplayName(testMethodName)
             ?? other.TestDisplayName;
         Timeout = other.Timeout;
         Traits = other.Traits ?? [];
     }
 
-    private string? GetTestDisplayName(
-        string? testMethodName,
-        INamedTestCase namedTestCase)
-    => ArgsCode == ArgsCode.Properties ?
-        namedTestCase.GetDisplayName(
-            testMethodName)
-        : testMethodName;
-
-    public string? GetDisplayName(string? testMethodName)
-    => _testData.GetDisplayName(testMethodName);
-    #endregion
+    // Copy constructor with dataStrategy and testMethodName
+    public TheoryTestDataRow(
+        TheoryTestDataRow<TTestData> other,
+        IDataStrategy dataStrategy,
+        string? testMethodName)
+    : this(other, GetArgsCode(dataStrategy), testMethodName)
+    {
+    }
     #endregion
 }
