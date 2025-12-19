@@ -5,27 +5,35 @@ using CsabaDu.DynamicTestData.Lite.xUnit.v3.TestDataTypes.Interfaces;
 
 namespace CsabaDu.DynamicTestData.Lite.xUnit.v3.TestDataTypes;
 
-public class TheoryTestDataRow(
+public abstract class TheoryTestDataRow(
     ITestData testData,
     ArgsCode argsCode)
 : TheoryDataRowBase,
 ITheoryTestDataRow
 {
+    public TheoryTestDataRow(
+        ITestData testData,
+        ArgsCode argsCode,
+        string? testMethodName)
+    : this(testData, argsCode)
+    {
+        TestDisplayName =
+            testData.GetDisplayName(testMethodName);
+    }
+
     #region Fields
     protected ITestData _testData = testData;
     #endregion
 
     #region Properties
-    public ArgsCode ArgsCode { get; protected set; }
-        = argsCode.Defined(nameof(argsCode));
+    public ArgsCode ArgsCode =>
+        argsCode.Defined(nameof(argsCode));
     #endregion
 
     #region Methods
     #region Static methods
     public static ArgsCode GetArgsCode(IDataStrategy dataStrategy)
-    => Guard.ArgumentNotNull(
-        dataStrategy,
-        nameof(dataStrategy))
+    => Guard.ArgumentNotNull(dataStrategy, nameof(dataStrategy))
         .ArgsCode;
 
     public static TTestData GetTestData<TTestData>(
@@ -62,32 +70,25 @@ ITheoryTestDataRow
     #endregion
 }
 
-public sealed class TheoryTestDataRow<TTestData> : TheoryTestDataRow,
+public sealed class TheoryTestDataRow<TTestData>
+: TheoryTestDataRow,
 ITheoryTestDataRow
 where TTestData : notnull, ITestData
 {
-    #region Constructors
-    // Main constructor
     public TheoryTestDataRow(
-        TTestData testData,
-        ArgsCode argsCode,
-        string? testMethodName)
-    : base(testData, argsCode)
+    TTestData testData,
+    ArgsCode argsCode,
+    string? testMethodName)
+    : base(testData, argsCode, testMethodName)
     {
-        TestDisplayName =
-            testData.GetDisplayName(testMethodName);
     }
-
-    // Copy constructor with argsCode and testMethodName
+        
     public TheoryTestDataRow(
         TheoryTestDataRow<TTestData> other,
         ArgsCode argsCode,
         string? testMethodName)
     : base(GetTestData(other), argsCode)
     {
-        ArgsCode = other.ArgsCode;
-        _testData = other._testData;
-
         Explicit = other.Explicit;
         Skip = other.Skip;
         Label = other.Label;
@@ -100,7 +101,6 @@ where TTestData : notnull, ITestData
         Traits = other.Traits ?? [];
     }
 
-    // Copy constructor with dataStrategy and testMethodName
     public TheoryTestDataRow(
         TheoryTestDataRow<TTestData> other,
         IDataStrategy dataStrategy,
@@ -108,5 +108,4 @@ where TTestData : notnull, ITestData
     : this(other, GetArgsCode(dataStrategy), testMethodName)
     {
     }
-    #endregion
 }
