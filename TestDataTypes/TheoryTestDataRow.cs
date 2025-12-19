@@ -43,7 +43,7 @@ ITheoryTestDataRow
     #endregion
 
     public bool ContainedBy(IEnumerable<INamedTestCase>? namedTestCases)
-    => namedTestCases?.Any(Equals) == true;
+    => _testData.ContainedBy(namedTestCases);
 
     public bool Equals(INamedTestCase? other)
     => _testData.Equals(other);
