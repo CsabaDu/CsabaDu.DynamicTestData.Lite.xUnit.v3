@@ -71,8 +71,7 @@ ITheoryTestDataRow
 }
 
 public sealed class TheoryTestDataRow<TTestData>
-: TheoryTestDataRow,
-ITheoryTestDataRow
+: TheoryTestDataRow
 where TTestData : notnull, ITestData
 {
     public TheoryTestDataRow(
